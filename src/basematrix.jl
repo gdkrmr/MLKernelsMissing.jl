@@ -1,11 +1,3 @@
-# Base.:(*)(x, ::Missing) = missing
-# Base.:(*)(::Missing, y) = missing
-# Base.:(+)(x, ::Missing) = missing
-# Base.:(+)(::Missing, y) = missing
-
-# @inline base_aggregate(::MLKernels.ScalarProduct, s, x, y) = s + x * y
-# @inline base_aggregate(::MLKernels.SquaredEuclidean, s, x, y) = s + (x - y) ^ 2
-
 @inline base_aggregate(f::BaseFunction, s::T, n, x::T,       y::T)       where T =
     base_aggregate(f, s, x, y), n + 1
 @inline base_aggregate( ::BaseFunction, s::T, n, x::T,        ::Missing) where T = s, n

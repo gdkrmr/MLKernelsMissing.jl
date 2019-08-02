@@ -1,24 +1,4 @@
-# @inline kappa(κ::PeriodicKernel{T}, z) where {T} = exp(-κ.α*z)
-# @inline kappa(κ::SigmoidKernel{T}, xᵀy) where {T} = tanh(κ.a*xᵀy + κ.c)
-# @inline kappa(κ::ExponentiatedKernel{T}, xᵀy) where {T} = exp(κ.α*xᵀy)
-# @inline kappa(κ::ExponentialKernel{T}, d²) where {T} = exp(-κ.α*√(d²))
-# @inline kappa(κ::SquaredExponentialKernel{T}, d²) where {T} = exp(-κ.α*d²)
-# @inline kappa(κ::GammaExponentialKernel{T}, d²) where {T} = exp(-κ.α*d²^κ.γ)
-# @inline kappa(κ::PolynomialKernel{T}, xᵀy) where {T} = (κ.a*xᵀy + κ.c)^(κ.d)
-# @inline kappa(κ::PowerKernel{T}, d²) where {T} = d²^κ.γ
-# @inline kappa(κ::RationalQuadraticKernel{T}, d²) where {T} = (one(T) + κ.α*d²)^(-κ.β)
-# @inline kappa(κ::GammaRationalQuadraticKernel{T}, d²) where {T} = (one(T) + κ.α*(d²^κ.γ))^(-κ.β)
-# @inline kappa(κ::LogKernel{T}, d²) where {T} = log(one(T) + κ.α*d²^(κ.γ))
-# @inline function kappa(κ::MaternKernel{T}, d²::T) where {T}
-#     d = √(d²)
-#     d = d < eps(T) ? eps(T) : d  # If d is zero, besselk will return NaN
-#     tmp = √(2κ.ν)*d/κ.ρ
-#     return (convert(T, 2)^(one(T) - κ.ν))*(tmp^κ.ν) * besselk(κ.ν, tmp) / gamma(κ.ν)
-# end
-
-
 kappa(κ::K, ::Missing) where K <: Kernel{T} where T = missing
-# basefunction(κ::Kernel) = error("this should be a specific type")
 
 function kappamatrix!(
     κ::Kernel{T},
