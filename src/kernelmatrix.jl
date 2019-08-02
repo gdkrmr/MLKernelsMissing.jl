@@ -68,9 +68,12 @@ function kernelmatrix!(
     {mT2 <: Union{Missing, T}} where
     {T <: AbstractFloat}
 
-    # NOTE: for whatever reason, this gets inferred to ::Any which causes the
-    # compiler to think that there is no method for basematrix! because there is
-    # no basematrix! method with f::Any
+    # NOTE: for whatever reason, this gets inferred to ::Any ONLY in this
+    # function. This causes the compiler to think that there is no method for
+    # basematrix! because there is no basematrix!(..., f::Any, ...) method. This
+    # can be fixed by inlining everything manually, by manually narrowing the
+    # return type to basefunction(κ)::BaseFunction or by widening the type
+    # signatures of basematrix!(..., f::Any, ...)
     f = basefunction(κ)
 
     basematrix!(σ, K, f, X, Y)
