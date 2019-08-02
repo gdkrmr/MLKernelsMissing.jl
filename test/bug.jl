@@ -1,5 +1,4 @@
-exit()
-cd("/home/gkraemer/progs/julia/MLKernelsMissing")
+cd("..")
 using Pkg
 Pkg.activate(".")
 
